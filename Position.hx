@@ -1,7 +1,7 @@
 class Position {
-	var index: Int;
-	var line: Int;
-	var column: Int;
+	public var index: Int;
+	public var line: Int;
+	public var column: Int;
 
 	public function new(index: Int, line: Int, column: Int) {
 		this.index = index;
