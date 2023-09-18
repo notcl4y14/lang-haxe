@@ -5,6 +5,7 @@ class Parser {
 	public var error: Error;
 
 	public function new(filename: String, tokens: Array<Token>) {
+		this.filename = filename;
 		this.tokens = tokens;
 		// this.errors = [];
 		this.error = null;
@@ -70,7 +71,29 @@ class Parser {
 	}
 
 	private function parseStmt() {
+		if (this.at().type == "ident" && (this.at().value == "var" || this.at().value == "let")) {
+			return this.parseVarDeclaration();
+		}
+
 		return this.parseExpr();
+	}
+
+	private function parseVarDeclaration(): nodes.Node {
+		var keyword = this.yum();
+		var ident = this.yumExpectType("ident", "Expected an identifier after the var | let keyword");
+
+		if (ident == null) {
+			return new nodes.Undeclared();
+		}
+
+		if (this.at().type != "equals") {
+			return new nodes.VarDeclaration(ident.value, nodes.NullLiteral);
+		}
+
+		this.yum();
+		var value = this.parseExpr();
+
+		return new nodes.VarDeclaration(ident.value, value);
 	}
 
 	private function parseExpr() {
