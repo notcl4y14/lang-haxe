@@ -15,7 +15,7 @@ class Main {
 
 		var content = sys.io.File.getContent(filename);
 
-		var lexer = new Lexer("<stdin>", content);
+		var lexer = new Lexer(filename, content);
 		var tokens = lexer.tokenize();
 
 		for( token in tokens ) {
