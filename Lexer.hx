@@ -84,6 +84,9 @@ class Lexer {
 
 			} else if (StringTools.contains(Lexer.strings.QUOTES, char)) {
 				tokens.push( this.makeString() );
+
+			} else if (StringTools.contains(Lexer.strings.IDENT, char)) {
+				tokens.push( this.makeIdent() );
 			}
 
 			this.advance();
@@ -133,5 +136,17 @@ class Lexer {
 		}
 
 		return new Token("string", str);
+	}
+
+	public function makeIdent() {
+		var ident = "";
+
+		while (this.notEof() && StringTools.contains(Lexer.strings.IDENT, this.at())
+				 || StringTools.contains(Lexer.strings.DIGITS, this.at())) {
+			ident += this.at();
+			this.advance();
+		}
+
+		return new Token("ident", ident);
 	}
 }
