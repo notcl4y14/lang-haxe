@@ -32,6 +32,28 @@ class Main {
 			}
 		}
 
+		var parser = new Parser(filename, tokens);
+		var ast = parser.makeAst();
+
+		/*if (parser.errors.length > 0) {
+			for( error in parser.errors ) {
+				Sys.println(error.asString());
+			}
+
+			return;
+		}*/
+
+		if (parser.error != null) {
+			Sys.println(parser.error.asString());
+			return;
+		}
+
+		if (Sys.args().contains("--parser")) {
+			for( node in ast.body ) {
+				Sys.println(node.type);
+			}
+		}
+
 	}
 
 	static function main() {

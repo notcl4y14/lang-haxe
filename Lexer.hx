@@ -48,37 +48,37 @@ class Lexer {
 
 			if (StringTools.contains(Lexer.strings.WHITESPACE, char)) {}
 			else if (StringTools.contains(Lexer.strings.BINOP, char)) {
-				tokens.push( new Token("binop", char) );
+				tokens.push( new Token("binop", char, this.pos) );
 			} else if (StringTools.contains(Lexer.strings.SYMBOLS, char)) {
 				// tokens.push( new Token("symbol", char) );
 
 				if (char == "(") {
-					tokens.push( new Token("lparen") );
+					tokens.push( new Token("lparen", null, this.pos) );
 				} else if (char == ")") {
-					tokens.push( new Token("rparen") );
+					tokens.push( new Token("rparen", null, this.pos) );
 
 				} else if (char == "[") {
-					tokens.push( new Token("lbracket") );
+					tokens.push( new Token("lbracket", null, this.pos) );
 				} else if (char == "]") {
-					tokens.push( new Token("rbracket") );
+					tokens.push( new Token("rbracket", null, this.pos) );
 
 				} else if (char == "{") {
-					tokens.push( new Token("lbrace") );
+					tokens.push( new Token("lbrace", null, this.pos) );
 				} else if (char == "}") {
-					tokens.push( new Token("rbrace") );
+					tokens.push( new Token("rbrace", null, this.pos) );
 
 				} else if (char == "=") {
-					tokens.push( new Token("equals") );
+					tokens.push( new Token("equals", null, this.pos) );
 				} else if (char == ".") {
-					tokens.push( new Token("dot") );
+					tokens.push( new Token("dot", null, this.pos) );
 				} else if (char == ",") {
-					tokens.push( new Token("comma") );
+					tokens.push( new Token("comma", null, this.pos) );
 				} else if (char == ":") {
-					tokens.push( new Token("colon") );
+					tokens.push( new Token("colon", null, this.pos) );
 				} else if (char == ";") {
-					tokens.push( new Token("semicolon") );
+					tokens.push( new Token("semicolon", null, this.pos) );
 				} else if (char == "&") {
-					tokens.push( new Token("ampersand") );
+					tokens.push( new Token("ampersand", null, this.pos) );
 				}
 
 			} else if (StringTools.contains(Lexer.strings.DIGITS, char)) {
@@ -97,12 +97,15 @@ class Lexer {
 			this.advance();
 		}
 
+		tokens.push( new Token("eof", null, this.pos) );
+
 		return tokens;
 	}
 
 	public function makeNumber() {
 		var numStr = "";
 		var float = false;
+		var pos = this.pos;
 
 		while (this.notEof() && StringTools.contains(Lexer.strings.DIGITS, this.at()) || this.at() == ".") {
 			var char = this.at();
@@ -122,14 +125,15 @@ class Lexer {
 		this.advance(-1);
 
 		if (float)
-			return new Token("number", Std.parseFloat(numStr));
+			return new Token("number", Std.parseFloat(numStr), pos);
 
-		return new Token("number", Std.parseInt(numStr));
+		return new Token("number", Std.parseInt(numStr), pos);
 	}
 
 	public function makeString() {
 		var str = "";
 		var quote = this.at();
+		var pos = this.pos;
 
 		// advance past the first quote
 		this.advance();
@@ -140,11 +144,12 @@ class Lexer {
 			this.advance();
 		}
 
-		return new Token("string", str);
+		return new Token("string", str, pos);
 	}
 
 	public function makeIdent() {
 		var ident = "";
+		var pos = this.pos;
 
 		while (this.notEof() && StringTools.contains(Lexer.strings.IDENT, this.at())
 				 || StringTools.contains(Lexer.strings.DIGITS, this.at())) {
@@ -152,6 +157,6 @@ class Lexer {
 			this.advance();
 		}
 
-		return new Token("ident", ident);
+		return new Token("ident", ident, pos);
 	}
 }
