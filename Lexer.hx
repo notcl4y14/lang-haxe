@@ -1,7 +1,8 @@
 class Lexer {
-	var filename: String;
+	public var filename: String;
 	var code: String;
 	var pos: Position;
+	public var errors: Array<Error>;
 
 	static var strings = {
 		WHITESPACE: " \t\r\n",
@@ -16,6 +17,7 @@ class Lexer {
 		this.filename = filename;
 		this.code = code;
 		this.pos = new Position(-1, 0, -1);
+		this.errors = [];
 
 		this.advance();
 	}
@@ -87,6 +89,9 @@ class Lexer {
 
 			} else if (StringTools.contains(Lexer.strings.IDENT, char)) {
 				tokens.push( this.makeIdent() );
+			} else {
+				var pos = this.pos;
+				this.errors.push( new Error(this.filename, pos, "Undefined character '" + char + "'"));
 			}
 
 			this.advance();

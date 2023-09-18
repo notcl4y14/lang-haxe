@@ -18,8 +18,18 @@ class Main {
 		var lexer = new Lexer(filename, content);
 		var tokens = lexer.tokenize();
 
-		for( token in tokens ) {
-			Sys.println(token.asString());
+		if (lexer.errors.length > 0) {
+			for( error in lexer.errors ) {
+				Sys.println(error.asString());
+			}
+
+			return;
+		}
+
+		if (Sys.args().contains("--lexer")) {
+			for( token in tokens ) {
+				Sys.println(token.asString());
+			}
 		}
 
 	}
