@@ -1,6 +1,6 @@
-package nodes;
+package components.nodes;
 
-class VarDeclaration extends Node {
+class VarDeclaration extends components.Node {
 	public var assigne: String;
 	public var value: Any;
 

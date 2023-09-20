@@ -1,3 +1,7 @@
+package components;
+
+import components.Position;
+
 class Error {
 	var filename: String;
 	var pos: Position;

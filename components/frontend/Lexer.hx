@@ -1,3 +1,7 @@
+package components.frontend;
+
+import components.Token;
+
 class Lexer {
 	public var filename: String;
 	var code: String;

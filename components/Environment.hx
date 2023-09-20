@@ -1,3 +1,5 @@
+package components;
+
 class Environment {
 	public var variables: Map<String, Any>;
 	public var parentEnv: Environment;

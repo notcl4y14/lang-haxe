@@ -1,4 +1,4 @@
-package nodes;
+package components;
 
 class Node {
 	public var type: String;

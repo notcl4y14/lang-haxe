@@ -1,6 +1,6 @@
-package nodes;
+package components.nodes;
 
-class NumericLiteral extends Node {
+class NumericLiteral extends components.Node {
 	public var value: Dynamic;
 
 	// TODO: limit dynamic value to Int and Float

@@ -1,6 +1,6 @@
-package nodes;
+package components.nodes;
 
-class BinaryExpr extends Node {
+class BinaryExpr extends components.Node {
 	public var left: Node;
 	public var op: String;
 	public var right: Node;

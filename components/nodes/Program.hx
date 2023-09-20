@@ -1,6 +1,6 @@
-package nodes;
+package components.nodes;
 
-class Program extends Node {
+class Program extends components.Node {
 	public var body: Array<Node>;
 
 	public function new() {

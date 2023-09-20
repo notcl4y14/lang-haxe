@@ -1,3 +1,5 @@
+package components;
+
 class Position {
 	public var index: Int;
 	public var line: Int;

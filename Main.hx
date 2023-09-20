@@ -1,3 +1,6 @@
+import components.frontend.Lexer;
+import components.frontend.Parser;
+
 class Main {
 
 	public function new() {

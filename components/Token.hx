@@ -1,3 +1,7 @@
+package components;
+
+import components.Position;
+
 class Token {
 	public var type: String;
 	public var value: Any;
