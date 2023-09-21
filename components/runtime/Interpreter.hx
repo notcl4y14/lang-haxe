@@ -1,17 +1,11 @@
 package components.runtime;
 
 import components.*;
+import components.nodes.*;
 import components.runtime.*;
 
 class Interpreter {
-	var filename: String;
-	public var error: Error;
-
-	public function new(filename: String) {
-		this.filename = filename;
-	}
-
-	static function evaluate(node: Node, env: Environment) {
+	public static function evaluate(node: Node, env: Environment) {
 		if (node.type == "NumericLiteral") {
 			return new RuntimeValue("number", node.value);
 		} else if (node.type == "Program") {
@@ -23,20 +17,20 @@ class Interpreter {
 		return new RuntimeValue("undeclared", null);
 	}
 
-	static function evaluateProgram(node: Node, env: Environment) {
-		var lastEvaluated: RuntimeValue;
+	static function evaluateProgram(node: Program, env: Environment) {
+		var lastEvaluated: RuntimeValue = null;
 
-		for (i in 0 ... node.body) {
-			lastEvaluated = Interpreter.evaluate(node.body[i]);
+		for (i in 0 ... node.body.length) {
+			lastEvaluated = Interpreter.evaluate(node.body[i], env);
 		}
 
 		return lastEvaluated;
 	}
 
-	static function evaluateBinaryExpr(node: Node, env: Environment) {
-		var left = Interpreter.evaluate(node.left);
+	static function evaluateBinaryExpr(node: BinaryExpr, env: Environment) {
+		var left = Interpreter.evaluate(node.left, env);
 		var op = node.op;
-		var right = Interpreter.evaluate(node.right);
+		var right = Interpreter.evaluate(node.right, env);
 
 		if (left.type == "number" && right.type == "number") {
 			return Interpreter.evaluateNumericBinaryExpr(left, op, right);
@@ -45,8 +39,8 @@ class Interpreter {
 		return new RuntimeValue("null", null);
 	}
 
-	static function evaluateNumericBinaryExpr(left: Node, op: String, right: Node) {
-		var result = 0;
+	static function evaluateNumericBinaryExpr(left: RuntimeValue, op: String, right: RuntimeValue) {
+		var result:Dynamic = 0;
 
 		if (op == "+") {
 			result = left.value + right.value;
