@@ -1,5 +1,6 @@
 import components.frontend.Lexer;
 import components.frontend.Parser;
+import components.runtime.Interpreter;
 
 class Main {
 
@@ -56,6 +57,11 @@ class Main {
 				Sys.println(node.type);
 			}
 		}
+
+		var env = new components.Environment();
+		var lastEvaluated = Interpreter.evaluate(ast, env);
+
+		Sys.println(lastEvaluated);
 
 	}
 

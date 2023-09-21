@@ -5,7 +5,7 @@ class Environment {
 	public var parentEnv: Environment;
 
 	public function new(parentEnv: Environment = null) {
-		this.variables = {};
+		this.variables = new Map<String, Any>();
 		this.parentEnv = parentEnv;
 	}
 
