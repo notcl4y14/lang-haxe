@@ -61,7 +61,7 @@ class Main {
 		var env = new components.Environment();
 		var lastEvaluated = Interpreter.evaluate(ast, env);
 
-		Sys.println(lastEvaluated);
+		Sys.println(lastEvaluated.type + ": " + lastEvaluated.value);
 
 	}
 

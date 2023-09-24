@@ -2,9 +2,9 @@ package components.runtime;
 
 class RuntimeValue {
 	public var type: String;
-	public var value: Any;
+	public var value: Dynamic;
 
-	public function new(type: String, value: Any) {
+	public function new(type: String, value: Dynamic) {
 		this.type = type;
 		this.value = value;
 	}
